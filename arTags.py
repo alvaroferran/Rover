@@ -25,7 +25,11 @@ while(True):
     # If found
     if len(corners) > 0:
         cv2.aruco.drawDetectedMarkers(gray,corners,ids)
-        print(corners)
+        a= corners[0][0][0][0] - corners[0][0][1][0]
+        b= corners[0][0][0][1] - corners[0][0][1][1]
+        side= math.sqrt( math.pow(a,2) + math.pow(b,2) )
+        percentage= (side*side*100)/(width*height)
+        print("Area: %0.2f%%"  % (percentage))
 
     # EXIT
     if cv2.waitKey(1) & 0xFF == ord('q'):
