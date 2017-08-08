@@ -30,6 +30,19 @@ while(True):
         side= math.sqrt( math.pow(a,2) + math.pow(b,2) )
         percentage= (side*side*100)/(width*height)
         print("Area: %0.2f%%"  % (percentage))
+        diagX=(corners[0][0][0][0] + corners[0][0][2][0])/2
+        diagY=(corners[0][0][0][1] + corners[0][0][2][1])/2
+        center= (diagX, diagY)
+        if center[0] > width/2:
+            x=1
+        else :
+            x=-1
+        if center[1] > height/2:
+            y=-1
+        else :
+            y=1
+        print("Quadrant (%d , %d)" %(x,y))
+
 
     # EXIT
     if cv2.waitKey(1) & 0xFF == ord('q'):
