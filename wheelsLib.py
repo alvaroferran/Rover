@@ -1,12 +1,6 @@
 #!/usr/bin/env python
 
-
-def constrain(val, valMin, valMax):
-    if val > valMax:
-        return valMax
-    if val < valMin:
-        return valMin
-    return val
+import utilsLib as utils
 
 
 def writeMotor(motor, value):
@@ -36,11 +30,11 @@ def writeMotor(motor, value):
 def drive(steering, throttle, mode=0):
 
     if mode == 1 and throttle < 0:
-        motATS = constrain(throttle * (1 - steering), -1, 1)
-        motBTS = constrain(throttle * (1 + steering), -1, 1)
+        motATS = utils.constrain(throttle * (1 - steering), -1, 1)
+        motBTS = utils.constrain(throttle * (1 + steering), -1, 1)
     else:
-        motATS = constrain(throttle * (1 + steering), -1, 1)
-        motBTS = constrain(throttle * (1 - steering), -1, 1)
+        motATS = utils.constrain(throttle * (1 + steering), -1, 1)
+        motBTS = utils.constrain(throttle * (1 - steering), -1, 1)
 
     if mode == 1:
         motAS = + steering * (1 - fabs(throttle))
@@ -49,8 +43,8 @@ def drive(steering, throttle, mode=0):
         motAS = 0
         motBS = 0
 
-    motA = constrain(motATS + motAS, -1, 1)
-    motB = constrain(motBTS + motBS, -1, 1)
+    motA = utils.constrain(motATS + motAS, -1, 1)
+    motB = utils.constrain(motBTS + motBS, -1, 1)
 
     # writeMotor(1,motA)
     # writeMotor(2,motB)

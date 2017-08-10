@@ -3,6 +3,7 @@
 import math
 import numpy as np
 import cv2
+import utilsLib as utils
 
 
 def cameraInit():
@@ -85,20 +86,23 @@ def processTagInfo(cors):
     return (center, area)
 
 
-def calcDirSpeed(center, percent, target):
+def calcDirSpeed(center, percent, ret):
 
     # Follow tag until it occupies this percentage of the image
     percentMax = 5
 
+    screen = ret[1]
+    target = ret[2]
+
     if center[0] < target[0]:
-        direction = -1
+        direction = utils.doubleMap(center[0], 0, target[0], -1, 0)
     elif center[0] > target[1]:
-        direction = 1
+        direction = utils.doubleMap(center[0], target[1], screen[1], 0, 1)
     else:
         direction = 0
 
     if percent < percentMax:
-        speed = 1
+        speed = utils.doubleMap(percent, 0, percentMax, 1, 0)
     else:
         speed = 0
 

@@ -18,7 +18,7 @@ def main():
         if tagCorners is not None:
             tagCenter, tagArea = tags.processTagInfo(tagCorners)
             tagPercent = (tagArea * 100) / (imgSize[0] * imgSize[1])
-            direction, speed = tags.calcDirSpeed(tagCenter, tagPercent, target)
+            direction, speed = tags.calcDirSpeed(tagCenter, tagPercent, camRet)
             wheels.drive(direction, speed)
 
         # EXIT
