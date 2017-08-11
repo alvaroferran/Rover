@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import math
 import numpy as np
 import cv2
 import wheelsLib as wheels
@@ -14,8 +13,8 @@ def main():
 
     while True:
         tagCorners = tags.findTag(capture)
-
         if tagCorners is not None:
+
             tagCenter, tagArea = tags.processTagInfo(tagCorners)
             tagPercent = (tagArea * 100) / (imgSize[0] * imgSize[1])
             direction, speed = tags.calcDirSpeed(tagCenter, tagPercent, camRet)

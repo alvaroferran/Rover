@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 
-def doubleMap( vx, v1, v2, n1, n2):
-    # v1 start of range, v2 end of range, vx the starting number between the range
-    percentage = (vx - v1) / (v2 - v1);
+def map(vx, v1, v2, n1, n2):
+    # v1 start of range, v2 end of range, vx the starting number in the range
+    percentage = (vx - v1) / (v2 - v1)
     # n1 start of new range, n2 end of new range
-    return (n2 - n1) * percentage + n1;
+    return (n2 - n1) * percentage + n1
 
 
 def constrain(val, valMin, valMax):

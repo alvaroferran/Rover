@@ -14,7 +14,7 @@ def writeMotor(motor, value):
         channel1 = 0
         channel2 = 0
 
-    # value = doubleMap(math.abs(value), 0,  1, minSpeed, maxSpeed)
+    # value = map(math.abs(value), 0,  1, minSpeed, maxSpeed)
 
     # if value>0:
         # pwmFunction(channel1, value)

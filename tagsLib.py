@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import math
 import numpy as np
 import cv2
 import utilsLib as utils
@@ -74,36 +73,56 @@ def findTag(cap):
 
 def processTagInfo(cors):
 
-    a = cors[0][0][0][0] - cors[0][0][1][0]  # Delta X coord of two corners
-    b = cors[0][0][0][1] - cors[0][0][1][1]  # Delta Y coord of two corners
-    side = math.sqrt(math.pow(a, 2) + math.pow(b, 2))
-    area = math.pow(side, 2)
+    # Convert list to np array
+    # [tag, corners, row, coordinate]
+    npCorners = np.asarray(cors)
 
-    centerX = (cors[0][0][0][0] + cors[0][0][2][0]) / 2
-    centerY = (cors[0][0][0][1] + cors[0][0][2][1]) / 2
-    center = (centerX, centerY)
+    # X and Y distances of two consecutive points, for all tags
+    a = npCorners[:, 0, 0, :] - npCorners[:, 0, 1, :]
+    # Length between the two previous points, for all tags
+    side = np.sqrt(np.power(a[:, 0], 2)+np.power(a[:, 1], 2))
+    # Areas of tags.
+    area = np.power(side, 2)
+
+    # Half of X and Y distances of opposing corners, for all tags
+    center = (npCorners[:, 0, 0, :] + npCorners[:, 0, 2, :]) / 2
 
     return (center, area)
 
 
 def calcDirSpeed(center, percent, ret):
 
-    # Follow tag until it occupies this percentage of the image
-    percentMax = 5
-
     screen = ret[1]
     target = ret[2]
 
-    if center[0] < target[0]:
-        direction = utils.doubleMap(center[0], 0, target[0], -1, 0)
-    elif center[0] > target[1]:
-        direction = utils.doubleMap(center[0], target[1], screen[1], 0, 1)
-    else:
-        direction = 0
+    # Follow tag until it occupies this percentage of the image
+    percentMax = 5
 
-    if percent < percentMax:
-        speed = utils.doubleMap(percent, 0, percentMax, 1, 0)
+    # Get indexes of tags sorted by ascending order
+    orderedIndx = np.argsort(-percent)
+
+    # Take largest tag
+    perc = percent[orderedIndx[0]]
+    cent = center[orderedIndx[0]]
+
+    if perc < percentMax:
+        speed = utils.map(perc, 0, percentMax, 1, 0)
     else:
         speed = 0
+        # If tag is too big, go to the next one
+        if len(orderedIndx) > 1:
+            perc = percent[orderedIndx[1]]
+            cent = center[orderedIndx[1]]
+            if perc < percentMax:
+                speed = utils.map(perc, 0, percentMax, 1, 0)
+            else:
+                speed = 0
+
+    if cent[0] < target[0]:
+        direction = utils.map(cent[0], 0, target[0], -1, 0)
+    elif cent[0] > target[1]:
+        direction = utils.map(cent[0], target[1], screen[1], 0, 1)
+    else:
+        direction = 0
 
     return (direction, speed)
