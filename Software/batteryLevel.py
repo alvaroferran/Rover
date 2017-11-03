@@ -4,6 +4,13 @@ import smbus
 import time
 
 
+def map(vx, v1, v2, n1, n2):
+    # v1 start of range, v2 end of range, vx the starting number in the range
+    percentage = (vx - v1) / (v2 - v1)
+    # n1 start of new range, n2 end of new range
+    return (n2 - n1) * percentage + n1
+
+
 def twos_complement(input_value, num_bits):
     mask = 2**(num_bits - 1)
     return -(input_value & mask) + (input_value & ~mask)
@@ -21,5 +28,8 @@ while True:
     adc = twos_complement(adc, 12)      # Find decimal equivalent
     voltage = (1.625-adc*3.25/2048)*2   # Calculate voltage from equation
                                         # (3V3 is actually 3.25 volts, YMMV)
-    print('%.2f' % voltage)
+    percent = map(voltage, 3.3, 4.2, 0, 100)
+    print("{:.2f}V, {:.2f}%".format(voltage, percent))
+
     time.sleep(1)
+
