@@ -60,14 +60,14 @@ def findTag(cap):
     cv2.line(gray, (windowMax, 0), (windowMax, height), (255, 0, 0), 1)
 
     # Display the frame
-    cv2.imshow('Camera', gray)
+    #cv2.imshow('Camera', gray)
 
     # If tag found
     if len(corners) > 0:
         # Draw box around tag
         cv2.aruco.drawDetectedMarkers(gray, corners, ids)
         # Display again to show the box
-        cv2.imshow('Camera', gray)
+        #cv2.imshow('Camera', gray)
         return corners
 
 
