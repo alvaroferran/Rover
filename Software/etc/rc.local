@@ -12,17 +12,7 @@
 # By default this script does nothing.
 #
 ###############################################################################
-#
-# Select the program to be launched automatically after booting by uncommenting
-# the relevant line:
 
-# FPV: remote controlled from Android phone's accelerometer, video stream from
-# on-board camera displayed on app.
-#/usr/bin/python /home/nanopi/FPV/FPV.py
-
-
-# Tag follower: follows an ArUco marker around stopping at a specified distance.
-#/usr/bin/python /home/nanopi/TagFollower/TagFollower.py
-
+eval /home/nanopi/startupPrograms.sh
 
 exit 0

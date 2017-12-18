@@ -23,7 +23,7 @@ maxSpeed = 100
 wheels = DifferentialDrive(motLA, motLB, motRA, motRB, minSpeed, maxSpeed)
 
 # Start video stream
-subprocess.call("/home/nanopi/FPV/videoStream.sh &", shell=True)
+subprocess.call("/home/nanopi/Programs/FPV/videoStream.sh &", shell=True)
 
 # Create socket
 socketServer = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
